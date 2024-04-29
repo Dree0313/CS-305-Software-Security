@@ -1,6 +1,6 @@
 # CS-305-Software-Security
 
-rfoultzsnhu
+
 Briefly summarize your client, Artemis Financial, and their software requirements. Who was the client? What issue did they want you to address?
 
 Artemis Financial is a financial institute that intends to provide their customers with a secure web application that would allow their customers to interact with them in a remote setting. 
