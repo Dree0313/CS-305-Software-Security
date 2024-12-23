@@ -1,0 +1,89 @@
+CS 305 Project One Template
+
+Document Revision History
+
+Version	Date	Author	Comments
+1.0	11/21/24	Alexandria Marbury	
+
+Client
+
+ 
+
+Instructions
+Submit this completed vulnerability assessment report. Replace the bracketed text with the relevant information. In this report, identify your security vulnerability findings and recommend the next steps to remedy the issues you have found.
+
+•	Respond to the five steps outlined below and include your findings. 
+•	Respond using your own words. You may also include images or supporting materials. If you include them, make certain to insert them in the relevant locations in the document.
+•	Refer to the Project One Guidelines and Rubric for more detailed instructions about each section of the template.
+ 
+Developer
+Alexandria Marbury
+
+1. Interpreting Client Needs
+Determine your client’s needs and potential threats and attacks associated with the company’s application and software security requirements. Consider the following questions regarding how companies protect against external threats based on the scenario information:
+
+•	What is the value of secure communications to the company?
+•	Are there any international transactions that the company produces?
+•	Are there governmental restrictions on secure communications to consider?
+•	What external threats might be present now and in the immediate future?
+•	What modernization requirements must be considered, such as the role of open-source libraries and evolving web application technologies?
+
+Secure communication is a crucial value for Artemis financial. The value creates trust between their clients and themselves. It also guarantees compliance and security for users’ information. Since Artemis specializes in savings, retirement, investments, and insurance, they likely to produce international transactions. One way they may possibly do this is by helping their customers acquire international insurance for travel. Since Artemis requires the use of encryption, since it is a United States company, it would be required to follow the Export Administration Regulations in insuring that they do not export certain encryption technologies. They also must follow financial regulation such as PCI DSS, which requires secure encryption when processing payments. A few current possible threats for Artemis include API specific threats such as injection attacks, poor authentication, and bypassing rate limits. Regarding future threats they may have to working about AI powered cyberattacks. In regard to open-source modernization requirements, these could include regularly updating vulnerability management to mitigate risks, and using tools such as npm audit and Maven to track dependencies and minimize unnecessary inclusion of libraries.
+
+2. Areas of Security
+Refer to the vulnerability assessment process flow diagram. Identify which areas of security apply to Artemis Financial’s software application. Justify your reasoning for why each area is relevant to the software application.
+
+Artemis Financial’s software application must focus on input validation to prevent injection attacks so that they may ensure that only valid data is processed into the system. They must also focus on APIs since they are using a Restful API interface. They must verify that these APIs are trustworthy and secure. Lastly, they must focus on Cryptography and Encapsulation. This will create secure communication and encryption to ensure that information is not accessed by hackers.
+
+3. Manual Review
+Continue working through the vulnerability assessment process flow diagram. Identify all vulnerabilities in the code base by manually inspecting the code.
+
+    public CRUD(String content1, String content2) {
+        this.content = content1;
+        this.content2 = content2;
+    }
+This portion of code requires input validation as well as focus on code errors. It currently instantly assumes all input to be valid.
+
+@RequestParam(value="business_name") String name
+This portion of code does not validate input which could allow hackers to perform injection attacks.
+
+@RequestMapping("/read")
+    public CRUD CRUD(@RequestParam(value="business_name") String name)
+This portion of code uses an API that could expose data. There is no verification of authorization or rate limiting
+
+return new CRUD(doc.toString());
+This portion of code uses toString which does not provide cryptography and therefore could expose information
+
+public void deposit(int a) {
+            account_balance = account_balance + a;
+    }
+This portion of code doesn’t validate whether the deposit amount is valid. There should be verification that the number is not negative or exceeds a certain amount.
+
+private int account_number;
+    int account_balance;
+These are sensitive variables that are stored in plain text. This could cause breach of data. 
+
+public class customer {
+This is a code error. Within Java syntax, the class name should be capitalized.
+
+4. Static Testing
+Run a dependency check on Artemis Financial’s software application to identify all security vulnerabilities in the code. Record the output from the dependency-check report. Include the following items:
+
+•	The names or vulnerability codes of the known vulnerabilities
+•	A brief description and recommended solutions provided by the dependency-check report
+•	Any attribution that documents how this vulnerability has been identified or documented previously
+
+snakeyaml-1.25.jar
+Since SnakeYaml’s constructor class doesn’t restrict types, it could allow a hacker to remotely access code. This can be mitigated by using SafeConsturctor or upgrading to 2.0 and above.
+
+spring-boot-2.2.4.RELEASE.jar
+When connected to Cloud Foundry, this can allow security bypass. Therefore when using 3.0.x, it should be upgraded to 3.0.6+ and when using 2.7.x, it should be upgraded to 2.7.11+.
+
+
+spring-core-5.2.3.RELEASE.jar
+When running on JDK 9+, there may be vulnerability due to data binding which would allow for remote code execution. This means that it could not be run on Tomcat as a WAR deployment since the vulnerability would be accessible.
+
+5. Mitigation Plan
+Interpret the results from the manual review and static testing report. Then identify the steps to mitigate the identified security vulnerabilities for Artemis Financial’s software application.
+
+According to these findings, the code would need to be updated for input validation, cryptography and encryption. Portions will also have to be updated to verify that the APIs are as secure as possible.
